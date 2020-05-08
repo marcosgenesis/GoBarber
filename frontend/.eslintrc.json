@@ -29,6 +29,7 @@
         "prettier"
     ],
     "rules": {
+        "arrow-parens":"off",
         "no-unused-expressions":"off",
         "operator-linebreak":"off",
         "implicit-arrow-linebreak":"off",
