@@ -14,6 +14,7 @@ import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
+import api from '../../services/api';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
@@ -35,40 +36,42 @@ const SignUp: React.FC = () => {
   const passwordInfoRef = useRef<TextInput>(null);
 
   const navigation = useNavigation();
-  const handleSignUp = useCallback(async (data: SignUpFormData) => {
-    try {
-      formRef.current?.setErrors({});
+  const handleSignUp = useCallback(
+    async (data: SignUpFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      const schema = Yup.object().shape({
-        name: Yup.string().required('Nome obrigatório'),
-        email: Yup.string()
-          .required('Senha obrigatória')
-          .email('Digite um email válido'),
-        password: Yup.string().min(6, 'No mínimo seis caracteres'),
-      });
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatório'),
+          email: Yup.string()
+            .required('Senha obrigatória')
+            .email('Digite um email válido'),
+          password: Yup.string().min(6, 'No mínimo seis caracteres'),
+        });
 
-      await schema.validate(data, { abortEarly: false });
+        await schema.validate(data, { abortEarly: false });
+        await api.post('/users', data);
 
-      // await api.post('/users', data);
+        Alert.alert(
+          'Cadastro realizado com sucesso',
+          'VOcê já pode fazer login na aplicação.',
+        );
 
-      // history.push('/');
-      // addToast({
-      //   type: 'success',
-      //   title: 'Cadastro Realizado!',
-      //   description: 'Você já pode fazer seu login no GoBarber',
-      // });
-    } catch (error) {
-      if (error instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(error);
-        formRef.current?.setErrors(errors);
-        return;
+        navigation.goBack();
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(error);
+          formRef.current?.setErrors(errors);
+          return;
+        }
+        Alert.alert(
+          'Erro no cadastro',
+          'Ocorreu um erro ao fazer seu cadastro, tente novamente',
+        );
       }
-      Alert.alert(
-        'Erro no cadastro',
-        'Ocorreu um erro ao fazer seu cadastro, tente novamente',
-      );
-    }
-  }, []);
+    },
+    [navigation],
+  );
   return (
     <>
       <KeyboardAvoidingView
