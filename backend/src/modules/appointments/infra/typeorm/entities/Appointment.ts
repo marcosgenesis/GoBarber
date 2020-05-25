@@ -7,7 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import User from './User';
+import User from '@modules/users/infra/typeorm/entities/User';
 /**
  * A Entidade que está sendo criada pela classe Appointment representa
  * no banco de dados a tabela appointments
