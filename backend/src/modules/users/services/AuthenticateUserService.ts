@@ -6,6 +6,7 @@ import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
 import IUsersRepository from '../repositories/IUsersRepository';
+import IHashProvider from '../providers/models/IHashProvider';
 
 interface IRequest {
   email: string;
@@ -20,6 +21,8 @@ class AuthenticateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -27,7 +30,10 @@ class AuthenticateUserService {
 
     if (!user) throw new AppError('Incorrect email/password combination', 401);
 
-    const passwordMateched = await compare(password, user.password);
+    const passwordMateched = await this.hashProvider.compareHash(
+      password,
+      user.password,
+    );
     if (!passwordMateched)
       throw new AppError('Incorrect email/password combination', 401);
 
