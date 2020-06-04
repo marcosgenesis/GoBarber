@@ -34,7 +34,7 @@ describe('SendForgotPasswordEmail', () => {
       email: 'jhon@gmail.com',
     });
 
-    expect(sendEmail).toHaveBeenCalled();
+    await expect(sendEmail).toHaveBeenCalled();
   });
 
   it('should not be able to recover a non-existing user password', async () => {
@@ -57,6 +57,6 @@ describe('SendForgotPasswordEmail', () => {
       email: 'jhon@gmail.com',
     });
 
-    expect(generate).toHaveBeenCalledWith(user.id);
+    await expect(generate).toHaveBeenCalledWith(user.id);
   });
 });
