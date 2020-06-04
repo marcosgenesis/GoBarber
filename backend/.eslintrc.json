@@ -24,6 +24,7 @@
         "prettier"
     ],
     "rules": {
+      "no-template-curly-in-string":"off",
       "@typescript-eslint/interface-name-prefix":["error",{
         "prefixWithI": "always"
       }],
