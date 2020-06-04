@@ -15,15 +15,20 @@ class SendForgotPasswordEmailService {
     private usersRepository: IUsersRepository,
     @inject('MailProvider')
     private mailProvider: IMailProvider,
-    @inject('UserToken')
+    @inject('UserTokenRepository')
     private userTokensRepository: IUserTokenRepository,
   ) {}
 
   public async execute({ email }: IRequest): Promise<void> {
     const user = await this.usersRepository.findByEmail(email);
     if (!user) throw new AppError('User does not exists');
-    const userToken = await this.userTokensRepository.generate(user.id);
-    this.mailProvider.sendEmail(email, 'oi');
+    console.log('oi');
+    const { token } = await this.userTokensRepository.generate(user.id);
+
+    await this.mailProvider.sendEmail(
+      email,
+      `Pedido de recuperação de senha recebido: ${token}`,
+    );
   }
 }
 export default SendForgotPasswordEmailService;

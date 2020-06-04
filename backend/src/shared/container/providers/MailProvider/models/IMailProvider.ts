@@ -1,3 +1,3 @@
 export default interface IMailProvider {
-  sendEmail(to: string, subject: string): Promise<void>;
+  sendEmail(to: string, body: string): Promise<void>;
 }
