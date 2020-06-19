@@ -8,7 +8,6 @@ import passwordRoutes from '@modules/users/infra/http/routes/password.routes';
 import profileRouter from '@modules/users/infra/http/routes/profile.routes';
 
 const routes = Router();
-
 routes.use('/appointments', appointmentsRouter);
 routes.use('/providers', providersRouter);
 routes.use('/users', usersRouter);

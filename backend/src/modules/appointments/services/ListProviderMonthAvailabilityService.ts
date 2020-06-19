@@ -28,6 +28,7 @@ class ListProviderMonthAvailabilityService {
     const appointments = await this.appointmentsRepository.findAllInMonthFromProvider(
       { provider_id, year, month },
     );
+
     const numberOfDaysInMonth = getDaysInMonth(new Date(year, month - 1));
 
     const eachDayInArray = Array.from(
@@ -36,6 +37,7 @@ class ListProviderMonthAvailabilityService {
       },
       (_, index) => index + 1,
     );
+
     const availability = eachDayInArray.map(day => {
       const appointmentsInDay = appointments.filter(appointment => {
         return getDate(appointment.date) === day;

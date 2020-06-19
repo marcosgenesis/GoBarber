@@ -1,4 +1,4 @@
-import { startOfHour, isAfter, getHours } from 'date-fns';
+import { startOfHour, isAfter, getHours, isBefore } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import AppError from '@shared/errors/AppError';
@@ -22,7 +22,7 @@ class CreateAppointmentService {
     user_id,
   }: IRequest): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
-    if (isAfter(Date.now(), appointmentDate)) {
+    if (isBefore(appointmentDate, Date.now())) {
       throw new AppError("You can't create appointment in the past date");
     }
     if (user_id === provider_id) {
