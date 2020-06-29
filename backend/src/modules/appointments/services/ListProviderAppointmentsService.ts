@@ -8,12 +8,6 @@ interface IRequest {
   month: number;
   year: number;
 }
-
-type IResponse = Array<{
-  day: number;
-  available: boolean;
-}>;
-
 @injectable()
 class ListProviderAppointmentsService {
   constructor(

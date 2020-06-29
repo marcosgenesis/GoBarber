@@ -13,7 +13,7 @@ describe('ListProviderAppointments', () => {
     );
   });
 
-  it('should be able to list the appointments on a expecific day ', async () => {
+  it('should be able to list the appointments on a especific day ', async () => {
     const appointment1 = await fakeAppointmentsRepository.create({
       provider_id: 'provider',
       user_id: 'user-id',
