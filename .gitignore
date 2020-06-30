@@ -1,3 +1,8 @@
 backend/node_modules
 backend/tmp/*
 !backend/tmp/.gitkeep
+backend/build/
+backend/temp/
+backend/.env
+backend/coverage
+backend/ormconfig.json
